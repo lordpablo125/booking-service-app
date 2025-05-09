@@ -3,41 +3,49 @@ import { use } from 'react'
 
 const Id = ({ params }) => {
   const { id }: { id: string } = use(params)
+  // name, duration, price, and a brief description.
   const centers = [
     {
       name: 'Hair Services',
-      image: 'globe.svg',
-      model: 'qweqweqe'
+      duration: '1hs',
+      price: 20,
+      description: 'qweqweqe'
     },
     {
       name: 'Body Treatments',
-      image: 'next.svg',
-      model: 'xvdsfsdf'
+      duration: '1hs',
+      price: 20,
+      description: 'xvdsfsdf'
     },
     {
       name: 'Nail Services',
-      image: 'next.svg',
-      model: 'xvdsfsdf'
+      duration: '1hs',
+      price: 20,
+      description: 'xvdsfsdf'
     },
     {
       name: 'Skin & Facial Treatments',
-      image: 'file.svg',
-      model: 'asd'
+      duration: '1hs',
+      price: 20,
+      description: 'asd'
     },
     {
       name: 'Spa & Relaxation',
-      image: 'file.svg',
-      model: 'asd'
+      duration: '1hs',
+      price: 20,
+      description: 'asd'
     },
     {
       name: 'Makeup Services',
-      image: 'file.svg',
-      model: 'asd'
+      duration: '1hs',
+      price: 20,
+      description: 'asd'
     },
     {
       name: 'Hair Removal',
-      image: 'file.svg',
-      model: 'asd'
+      duration: '1hs',
+      price: 20,
+      description: 'asd'
     }
   ]
   return (

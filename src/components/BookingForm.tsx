@@ -25,11 +25,11 @@ const BookingForm: FC<TripFormProps> = ({ title, trip = {} }) => {
   const { push } = useRouter()
   const [open, setOpen] = useState(false)
 
-  const { mutate: createTrip, isSuccess: isCreateSuccess } = useCreateTrips()
+  // const { mutate: createTrip, isSuccess: isCreateSuccess } = useCreateTrips()
 
   const handleSuccess = () => {
     setOpen(true)
-    push(`/trips`)
+    // push(`/trips`)
   }
 
   const handleClose = (
@@ -56,44 +56,37 @@ const BookingForm: FC<TripFormProps> = ({ title, trip = {} }) => {
     const nuevaHora = add(horaBase, { hours: 3 })
     const endTime = format(nuevaHora, 'HH:mm')
 
-    await createTrip({
-      ...data,
-      passagers: passagersArray,
-      startTime: startTime + ':00',
-      endTime: endTime + ':00'
-    })
+    // await createTrip({
+    //   ...data,
+    //   passagers: passagersArray,
+    //   startTime: startTime + ':00',
+    //   endTime: endTime + ':00'
+    // })
 
     if (isCreateSuccess) {
       handleSuccess()
     }
   }
 
+  // name, email, date, and time.
+
   return (
     <Box className='flex justify-center flex-col'>
       <Typography className='text-center' variant='h2'>
-        {title}
+        Book a session
       </Typography>
       <Box
         component='form'
         onSubmit={handleSubmit}
         className='flex flex-col gap-2 max-w-[300px] my-4 mx-auto'
       >
-        <TextField
-          select
-          label='type'
-          name='type'
-          defaultValue={'common'}
-          required
-        >
-          <MenuItem value='common'>common</MenuItem>
-          <MenuItem value='special'>special</MenuItem>
-        </TextField>
+        <TextField label='Name' name='Name' type='text' required />
+        <TextField label='Email' name='Email' type='email' required />
 
         <TextField
           label='date'
           name='date'
           type='date'
-          // slots={{ input: 'input' }}
           slotProps={{
             input: { min: tomorrow },
             inputLabel: { shrink: true }
@@ -106,19 +99,6 @@ const BookingForm: FC<TripFormProps> = ({ title, trip = {} }) => {
           type='time'
           slotProps={{ inputLabel: { shrink: true } }}
           required
-        />
-        <TextField
-          label='passagerNumber'
-          name='passagerNumber'
-          type='number'
-          defaultValue={45}
-        />
-        <TextField
-          label='price'
-          name='price'
-          type='number'
-          required
-          defaultValue={400}
         />
 
         <Box className='mx-auto'>
