@@ -24,6 +24,7 @@ const CentersCard: FC<CenterCardProps> = ({ centers }) => {
           Add new
         </Button>
       </Link>
+      {/* center's logo, name, brief description, and offered services. */}
       {centers?.length > 0 &&
         centers.map((center: Boat, index) => (
           <Link
@@ -42,10 +43,13 @@ const CentersCard: FC<CenterCardProps> = ({ centers }) => {
               />
               <CardContent>
                 <Typography gutterBottom variant='h5' component='div'>
-                  {center.name}
+                  Name: {center.name}
                 </Typography>
-                <Typography variant='body2' sx={{ color: 'text.secondary' }}>
-                  model: {center.model}
+                <Typography variant='h5' sx={{ color: 'text.secondary' }}>
+                  Description: {center.description}
+                </Typography>
+                <Typography variant='h5' sx={{ color: 'text.secondary' }}>
+                  Services: {center.services}
                 </Typography>
               </CardContent>
             </Card>

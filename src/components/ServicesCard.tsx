@@ -39,22 +39,13 @@ const ServicesCard: FC<CenterCardProps> = ({ centers }) => {
                     {center.name}
                   </Typography>
                   <Box className='flex flex-col '>
-                    <Typography
-                      variant='body2'
-                      sx={{ color: 'text.secondary' }}
-                    >
+                    <Typography variant='h6' sx={{ color: 'text.secondary' }}>
                       Duration: {center.duration}
                     </Typography>
-                    <Typography
-                      variant='body2'
-                      sx={{ color: 'text.secondary' }}
-                    >
+                    <Typography variant='h6' sx={{ color: 'text.secondary' }}>
                       Price: ${center.price}
                     </Typography>
-                    <Typography
-                      variant='body2'
-                      sx={{ color: 'text.secondary' }}
-                    >
+                    <Typography variant='h6' sx={{ color: 'text.secondary' }}>
                       Description: {center.description}
                     </Typography>
                   </Box>

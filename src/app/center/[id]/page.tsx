@@ -24,12 +24,6 @@ const Id = ({ params }) => {
       description: 'xvdsfsdf'
     },
     {
-      name: 'Skin & Facial Treatments',
-      duration: '1hs',
-      price: 20,
-      description: 'asd'
-    },
-    {
       name: 'Spa & Relaxation',
       duration: '1hs',
       price: 20,
