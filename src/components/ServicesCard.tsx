@@ -1,37 +1,29 @@
 'use client'
 import { Boat, CenterCardProps } from '@/types'
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  Typography
-} from '@mui/material'
-import Link from 'next/link'
+import { Box, Card, CardContent, Typography } from '@mui/material'
+import { useRouter } from 'next/navigation'
 import { FC } from 'react'
-import AddIcon from '@mui/icons-material/Add'
 
-const ServicesCard: FC<CenterCardProps> = ({ centers }) => {
+//revisar los types
+const ServicesCard: FC<CenterCardProps> = ({ services, centerId }) => {
+  const router = useRouter()
+
+  const handleRedirection = (id) => {
+    console.log('***  ~ handleRedirection  ~ id:', id, ' centerId ', centerId)
+    router.push(`/center/${centerId}/service/${id}`)
+  }
   return (
     <Box className='flex flex-col items-center '>
       <Typography className='text-center' variant='h2'>
         Services list
       </Typography>
-      <Link href={`/center/create`} className=' my-4' passHref>
-        <Button color='primary' variant='outlined'>
-          <AddIcon />
-          Add new
-        </Button>
-      </Link>
-      <Box className='flex justify-center flex-wrap gap-4'>
-        {centers?.length > 0 &&
-          centers.map((center: Boat, index) => (
-            <Link
-              href={`/center/${index}`}
-              className=' my-4'
-              passHref
+
+      <Box className='flex justify-center flex-wrap gap-4 mt-5'>
+        {services?.length > 0 &&
+          services.map((center: Boat, index) => (
+            <Box
               key={center.name + index}
+              onClick={() => handleRedirection(center.id)}
             >
               <Card className='mb-4' sx={{ width: 345, height: 200 }}>
                 <CardContent>
@@ -48,10 +40,13 @@ const ServicesCard: FC<CenterCardProps> = ({ centers }) => {
                     <Typography variant='h6' sx={{ color: 'text.secondary' }}>
                       Description: {center.description}
                     </Typography>
+                    <Typography variant='h6' sx={{ color: 'text.secondary' }}>
+                      ididiid: {center.id}
+                    </Typography>
                   </Box>
                 </CardContent>
               </Card>
-            </Link>
+            </Box>
           ))}
       </Box>
     </Box>

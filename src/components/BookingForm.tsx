@@ -1,10 +1,8 @@
 'use client'
-import { Employee, Passager, Trip } from '@/types'
 import {
   Alert,
   Box,
   Button,
-  MenuItem,
   Snackbar,
   SnackbarCloseReason,
   TextField,
@@ -14,22 +12,42 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { FC, useState } from 'react'
 import { format, addDays, add } from 'date-fns'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
 
 type TripFormProps = {
   title: string
   trip?: Trip
 }
 
-const BookingForm: FC<TripFormProps> = ({ title, trip = {} }) => {
+const BookingForm: FC<TripFormProps> = ({ centerId, serviceId }) => {
   const tomorrow = format(addDays(new Date(), 1), 'yyyy-MM-dd')
+
   const { push } = useRouter()
   const [open, setOpen] = useState(false)
+  const schema = yup.object({
+    Name: yup.string().required('Name is required'),
+    Email: yup.string().email('Invalid email').required('Email is required'),
+    date: yup
+      .date()
+      .min(tomorrow, 'Date must be tomorrow or later')
+      .required('Date is required'),
+    startTime: yup.string().required('Start time is required')
+  })
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(schema)
+  })
 
   // const { mutate: createTrip, isSuccess: isCreateSuccess } = useCreateTrips()
 
   const handleSuccess = () => {
     setOpen(true)
-    // push(`/trips`)
+    push(`/`)
   }
 
   const handleClose = (
@@ -43,19 +61,8 @@ const BookingForm: FC<TripFormProps> = ({ title, trip = {} }) => {
     setOpen(false)
   }
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault()
-    const formData = new FormData(e.target)
-    const data: any = Object.fromEntries(formData.entries())
-    const passagersArray = passagers.map((pas) => pas.documentId)
-
-    const { startTime } = data
-    const [hora, minutos] = startTime.split(':').map(Number)
-    const hoy = new Date()
-    const horaBase = new Date(hoy.setHours(hora, minutos, 0, 0))
-    const nuevaHora = add(horaBase, { hours: 3 })
-    const endTime = format(nuevaHora, 'HH:mm')
-
+  const onSubmit = async (data) => {
+    console.log(' Form data:', data)
     // await createTrip({
     //   ...data,
     //   passagers: passagersArray,
@@ -63,9 +70,9 @@ const BookingForm: FC<TripFormProps> = ({ title, trip = {} }) => {
     //   endTime: endTime + ':00'
     // })
 
-    if (isCreateSuccess) {
-      handleSuccess()
-    }
+    // if (isCreateSuccess) {
+    //   handleSuccess()
+    // }
   }
 
   // name, email, date, and time.
@@ -77,28 +84,41 @@ const BookingForm: FC<TripFormProps> = ({ title, trip = {} }) => {
       </Typography>
       <Box
         component='form'
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         className='flex flex-col gap-2 max-w-[300px] my-4 mx-auto'
       >
-        <TextField label='Name' name='Name' type='text' required />
-        <TextField label='Email' name='Email' type='email' required />
+        <TextField
+          label='Name'
+          {...register('Name')}
+          error={!!errors.Name}
+          helperText={errors.Name?.message}
+        />
 
         <TextField
-          label='date'
-          name='date'
-          type='date'
-          slotProps={{
-            input: { min: tomorrow },
-            inputLabel: { shrink: true }
-          }}
-          required
+          label='Email'
+          type='email'
+          {...register('Email')}
+          error={!!errors.Email}
+          helperText={errors.Email?.message}
         />
+
         <TextField
-          label='startTime'
-          name='startTime'
+          label='Date'
+          type='date'
+          {...register('date')}
+          inputProps={{ min: tomorrow }}
+          InputLabelProps={{ shrink: true }}
+          error={!!errors.date}
+          helperText={errors.date?.message}
+        />
+
+        <TextField
+          label='Start Time'
           type='time'
-          slotProps={{ inputLabel: { shrink: true } }}
-          required
+          {...register('startTime')}
+          InputLabelProps={{ shrink: true }}
+          error={!!errors.startTime}
+          helperText={errors.startTime?.message}
         />
 
         <Box className='mx-auto'>

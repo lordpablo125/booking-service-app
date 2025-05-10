@@ -1,6 +1,9 @@
 import BookingForm from '@/components/BookingForm'
+import { use } from 'react'
 
 const PageBooking = ({ params }) => {
+  const { centerId, serviceId }: { id: string } = use(params)
+  console.log(`***  ~ PageBooking  ~:`, { centerId, serviceId })
   const centers = [
     {
       name: 'Pepe1',
@@ -20,7 +23,7 @@ const PageBooking = ({ params }) => {
   ]
   return (
     <>
-      <BookingForm centers={centers} />
+      <BookingForm centerId={centerId} serviceId={serviceId} />
     </>
   )
 }
