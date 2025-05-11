@@ -15,6 +15,7 @@ import { format, addDays, add } from 'date-fns'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import { FormDataList } from './FormList'
 
 type TripFormProps = {
   title: string
@@ -38,6 +39,7 @@ const BookingForm: FC<TripFormProps> = ({ centerId, serviceId }) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors }
   } = useForm({
     resolver: yupResolver(schema)
@@ -61,21 +63,20 @@ const BookingForm: FC<TripFormProps> = ({ centerId, serviceId }) => {
     setOpen(false)
   }
 
-  const onSubmit = async (data) => {
-    console.log(' Form data:', data)
-    // await createTrip({
-    //   ...data,
-    //   passagers: passagersArray,
-    //   startTime: startTime + ':00',
-    //   endTime: endTime + ':00'
-    // })
+  const onSubmit = (data) => {
+    const stored = localStorage.getItem('formDataList')
+    const parsed = stored ? JSON.parse(stored) : []
+    parsed.push({
+      ...data,
+      centerId,
+      serviceId
+    })
 
-    // if (isCreateSuccess) {
-    //   handleSuccess()
-    // }
+    localStorage.setItem('formDataList', JSON.stringify(parsed))
+    reset()
+
+    console.log('Nuevo formulario guardado:', data)
   }
-
-  // name, email, date, and time.
 
   return (
     <Box className='flex justify-center flex-col'>
@@ -116,7 +117,9 @@ const BookingForm: FC<TripFormProps> = ({ centerId, serviceId }) => {
           label='Start Time'
           type='time'
           {...register('startTime')}
-          InputLabelProps={{ shrink: true }}
+          slotProps={{
+            inputLabel: { shrink: true }
+          }}
           error={!!errors.startTime}
           helperText={errors.startTime?.message}
         />
@@ -132,6 +135,7 @@ const BookingForm: FC<TripFormProps> = ({ centerId, serviceId }) => {
           </Button>
         </Box>
       </Box>
+      <FormDataList />
       <Snackbar open={open} autoHideDuration={8000} onClose={handleClose}>
         <Alert
           onClose={handleClose}
