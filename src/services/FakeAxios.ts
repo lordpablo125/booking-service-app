@@ -1,26 +1,26 @@
-function withDelay<T>(data: T, delay = 2000): Promise<T> {
+function withDelay<T>(data: T, delay = 1500): Promise<T> {
   return new Promise((resolve) => {
     setTimeout(() => resolve(data), delay)
   })
 }
 
-export const getCenters = (url: string, config?: any) => {
+export const getCenters = () => {
   const response = {
     centers: [
       {
         name: 'Pepe1',
         image: 'globe.svg',
-        model: 'qweqweqe'
+        description: 'qweqweqe'
       },
       {
         name: 'Momo',
         image: 'next.svg',
-        model: 'xvdsfsdf'
+        description: 'xvdsfsdf'
       },
       {
         name: 'Toto2',
         image: 'file.svg',
-        model: 'asd'
+        description: 'asd'
       }
     ],
     status: 200
@@ -28,7 +28,7 @@ export const getCenters = (url: string, config?: any) => {
   return withDelay(response)
 }
 
-export const getServices = (url: string, config?: any) => {
+export const getServices = () => {
   const response = {
     services: [
       {

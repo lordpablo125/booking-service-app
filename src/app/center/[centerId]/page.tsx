@@ -1,12 +1,9 @@
 import ServicesCard from '@/components/ServicesCard'
-import { use } from 'react'
 
-const ServicePage = ({ params }) => {
-  const { centerId }: { id: string } = use(params)
-
+const ServicePage = async ({ params }: any) => {
   return (
     <>
-      <ServicesCard centerId={centerId} />
+      <ServicesCard centerId={params.centerId} />
     </>
   )
 }

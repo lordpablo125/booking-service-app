@@ -1,13 +1,16 @@
 'use client'
 import { useGetCenters } from '@/services/centerServices'
-import { Boat, CenterCardProps } from '@/types'
 import { Box, Card, CardContent, CardMedia, Typography } from '@mui/material'
 import Link from 'next/link'
-import { FC } from 'react'
+type Center = {
+  name: string
+  image: string
+  description: string
+}
 
-const CentersCard: FC<CenterCardProps> = () => {
+const CentersCard = () => {
   const { data, isLoading } = useGetCenters()
-  const centers = data?.centers
+  const centers = data?.centers ?? []
 
   if (isLoading) {
     return <>Loading...</>
@@ -20,7 +23,7 @@ const CentersCard: FC<CenterCardProps> = () => {
       </Typography>
 
       {centers?.length > 0 &&
-        centers.map((center: Boat, index) => (
+        centers.map((center: Center, index: number) => (
           <Link
             href={`/center/${index}`}
             className=' my-4'
@@ -41,9 +44,6 @@ const CentersCard: FC<CenterCardProps> = () => {
                 </Typography>
                 <Typography variant='h5' sx={{ color: 'text.secondary' }}>
                   Description: {center.description}
-                </Typography>
-                <Typography variant='h5' sx={{ color: 'text.secondary' }}>
-                  Services: {center.services}
                 </Typography>
               </CardContent>
             </Card>

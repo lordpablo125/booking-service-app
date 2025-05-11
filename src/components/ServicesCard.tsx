@@ -1,17 +1,28 @@
 'use client'
 import { useGetServices } from '@/services/getServices'
-import { Boat, CenterCardProps } from '@/types'
 import { Box, Card, CardContent, Typography } from '@mui/material'
 import { useRouter } from 'next/navigation'
 import { FC } from 'react'
 
+type ServicesCardProps = {
+  centerId: number
+}
+
+type Service = {
+  id: string
+  name: string
+  duration: string
+  price: number
+  description: string
+}
+
 //revisar los types
-const ServicesCard: FC<CenterCardProps> = ({ centerId }) => {
+const ServicesCard: FC<ServicesCardProps> = ({ centerId }) => {
   const router = useRouter()
   const { data, isLoading } = useGetServices()
-  const services = data?.services
+  const services = data?.services ?? []
 
-  const handleRedirection = (id) => {
+  const handleRedirection = (id: string) => {
     router.push(`/center/${centerId}/service/${id}`)
   }
 
@@ -26,28 +37,28 @@ const ServicesCard: FC<CenterCardProps> = ({ centerId }) => {
 
       <Box className='flex justify-center flex-wrap gap-4 mt-5'>
         {services?.length > 0 &&
-          services.map((center: Boat, index) => (
+          services.map((service: Service, index) => (
             <Box
-              key={center.name + index}
-              onClick={() => handleRedirection(center.id)}
+              key={service.name + index}
+              onClick={() => handleRedirection(service.id)}
             >
               <Card className='mb-4' sx={{ width: 345, height: 200 }}>
                 <CardContent>
                   <Typography gutterBottom variant='h4' component='div'>
-                    {center.name}
+                    {service.name}
                   </Typography>
                   <Box className='flex flex-col '>
                     <Typography variant='h6' sx={{ color: 'text.secondary' }}>
-                      Duration: {center.duration}
+                      Duration: {service.duration}
                     </Typography>
                     <Typography variant='h6' sx={{ color: 'text.secondary' }}>
-                      Price: ${center.price}
+                      Price: ${service.price}
                     </Typography>
                     <Typography variant='h6' sx={{ color: 'text.secondary' }}>
-                      Description: {center.description}
+                      Description: {service.description}
                     </Typography>
                     <Typography variant='h6' sx={{ color: 'text.secondary' }}>
-                      ididiid: {center.id}
+                      ididiid: {service.id}
                     </Typography>
                   </Box>
                 </CardContent>

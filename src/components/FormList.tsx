@@ -10,6 +10,15 @@ import {
 } from '@mui/material'
 import { format, parseISO } from 'date-fns'
 
+type FormItem = {
+  startTime: string
+  date: string
+  Email: string
+  Name: string
+  serviceId: string
+  centerId: number
+}
+
 export const FormDataList = () => {
   const [formDataList, setFormDataList] = useState([])
 
@@ -20,7 +29,7 @@ export const FormDataList = () => {
     }
   }, [])
 
-  const dateFormater = (isoString) => {
+  const dateFormater = (isoString: string) => {
     const parsedDate = parseISO(isoString)
     return format(parsedDate, 'dd/MM/yy')
   }
@@ -40,7 +49,7 @@ export const FormDataList = () => {
       </Typography>
       <Paper elevation={2}>
         <List disablePadding>
-          {formDataList.map((item, index) => (
+          {formDataList.map((item: FormItem, index) => (
             <Box key={index}>
               <ListItem alignItems='flex-start'>
                 <ListItemText

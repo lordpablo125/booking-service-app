@@ -9,7 +9,6 @@ import {
   Typography
 } from '@mui/material'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import React, { FC, useState } from 'react'
 import { format, addDays } from 'date-fns'
 import { useForm } from 'react-hook-form'
@@ -17,15 +16,21 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { FormDataList } from './FormList'
 
-type TripFormProps = {
-  title: string
-  trip?: Trip
+type BookingFormProps = {
+  centerId: number
+  serviceId: string
 }
 
-const BookingForm: FC<TripFormProps> = ({ centerId, serviceId }) => {
+type BookingData = {
+  startTime: string
+  date: Date
+  Email: string
+  Name: string
+}
+
+const BookingForm: FC<BookingFormProps> = ({ centerId, serviceId }) => {
   const tomorrow = format(addDays(new Date(), 1), 'yyyy-MM-dd')
 
-  const { push } = useRouter()
   const [open, setOpen] = useState(false)
   const schema = yup.object({
     Name: yup.string().required('Name is required'),
@@ -45,11 +50,8 @@ const BookingForm: FC<TripFormProps> = ({ centerId, serviceId }) => {
     resolver: yupResolver(schema)
   })
 
-  // const { mutate: createTrip, isSuccess: isCreateSuccess } = useCreateTrips()
-
   const handleSuccess = () => {
     setOpen(true)
-    push(`/`)
   }
 
   const handleClose = (
@@ -63,7 +65,7 @@ const BookingForm: FC<TripFormProps> = ({ centerId, serviceId }) => {
     setOpen(false)
   }
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: BookingData) => {
     const stored = localStorage.getItem('formDataList')
     const parsed = stored ? JSON.parse(stored) : []
     parsed.push({
@@ -71,10 +73,11 @@ const BookingForm: FC<TripFormProps> = ({ centerId, serviceId }) => {
       centerId,
       serviceId
     })
+    console.log('***  ~ onSubmit  ~ parsed:', parsed)
 
     localStorage.setItem('formDataList', JSON.stringify(parsed))
     reset()
-
+    handleSuccess()
     console.log('Nuevo formulario guardado:', data)
   }
 
@@ -136,13 +139,18 @@ const BookingForm: FC<TripFormProps> = ({ centerId, serviceId }) => {
         </Box>
       </Box>
       <FormDataList />
-      <Snackbar open={open} autoHideDuration={8000} onClose={handleClose}>
+      <Snackbar
+        open={open}
+        autoHideDuration={2000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
         <Alert
           onClose={handleClose}
           variant='filled'
           sx={{ width: '100%', backgroundColor: 'MediumSeaGreen' }}
         >
-          New Employee added successfully
+          Booking session successfully
         </Alert>
       </Snackbar>
     </Box>
