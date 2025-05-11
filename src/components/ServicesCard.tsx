@@ -1,16 +1,22 @@
 'use client'
+import { useGetServices } from '@/services/getServices'
 import { Boat, CenterCardProps } from '@/types'
 import { Box, Card, CardContent, Typography } from '@mui/material'
 import { useRouter } from 'next/navigation'
 import { FC } from 'react'
 
 //revisar los types
-const ServicesCard: FC<CenterCardProps> = ({ services, centerId }) => {
+const ServicesCard: FC<CenterCardProps> = ({ centerId }) => {
   const router = useRouter()
+  const { data, isLoading } = useGetServices()
+  const services = data?.services
 
   const handleRedirection = (id) => {
-    console.log('***  ~ handleRedirection  ~ id:', id, ' centerId ', centerId)
     router.push(`/center/${centerId}/service/${id}`)
+  }
+
+  if (isLoading) {
+    return <>Loading...</>
   }
   return (
     <Box className='flex flex-col items-center '>

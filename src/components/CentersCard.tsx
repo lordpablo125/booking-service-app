@@ -5,8 +5,9 @@ import { Box, Card, CardContent, CardMedia, Typography } from '@mui/material'
 import Link from 'next/link'
 import { FC } from 'react'
 
-const CentersCard: FC<CenterCardProps> = ({ centers }) => {
-  const { data: centersData, isLoading } = useGetCenters()
+const CentersCard: FC<CenterCardProps> = () => {
+  const { data, isLoading } = useGetCenters()
+  const centers = data?.centers
 
   if (isLoading) {
     return <>Loading...</>
@@ -18,7 +19,6 @@ const CentersCard: FC<CenterCardProps> = ({ centers }) => {
         Center list
       </Typography>
 
-      {/* center's logo, name, brief description, and offered services. */}
       {centers?.length > 0 &&
         centers.map((center: Boat, index) => (
           <Link
