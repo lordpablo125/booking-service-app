@@ -1,10 +1,17 @@
 'use client'
+import { useGetCenters } from '@/services/centerServices'
 import { Boat, CenterCardProps } from '@/types'
 import { Box, Card, CardContent, CardMedia, Typography } from '@mui/material'
 import Link from 'next/link'
 import { FC } from 'react'
 
 const CentersCard: FC<CenterCardProps> = ({ centers }) => {
+  const { data: centersData, isLoading } = useGetCenters()
+
+  if (isLoading) {
+    return <>Loading...</>
+  }
+
   return (
     <Box className='flex flex-col items-center '>
       <Typography className='text-center' variant='h2'>
