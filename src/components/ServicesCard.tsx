@@ -16,7 +16,6 @@ type Service = {
   description: string
 }
 
-//revisar los types
 const ServicesCard: FC<ServicesCardProps> = ({ centerId }) => {
   const router = useRouter()
   const { data, isLoading } = useGetServices()

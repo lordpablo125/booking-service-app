@@ -29,6 +29,8 @@ type BookingData = {
 }
 
 const BookingForm: FC<BookingFormProps> = ({ centerId, serviceId }) => {
+  const [newData, setNewData] = useState(false)
+  const updated = () => setNewData(false)
   const tomorrow = format(addDays(new Date(), 1), 'yyyy-MM-dd')
 
   const [open, setOpen] = useState(false)
@@ -73,12 +75,11 @@ const BookingForm: FC<BookingFormProps> = ({ centerId, serviceId }) => {
       centerId,
       serviceId
     })
-    console.log('***  ~ onSubmit  ~ parsed:', parsed)
 
     localStorage.setItem('formDataList', JSON.stringify(parsed))
     reset()
     handleSuccess()
-    console.log('Nuevo formulario guardado:', data)
+    setNewData(true)
   }
 
   return (
@@ -138,7 +139,7 @@ const BookingForm: FC<BookingFormProps> = ({ centerId, serviceId }) => {
           </Button>
         </Box>
       </Box>
-      <FormDataList />
+      <FormDataList newData={newData} updated={updated} />
       <Snackbar
         open={open}
         autoHideDuration={2000}

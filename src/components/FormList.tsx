@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import {
   List,
   ListItem,
@@ -10,6 +10,11 @@ import {
 } from '@mui/material'
 import { format, parseISO } from 'date-fns'
 
+type FormDataListProp = {
+  newData: boolean
+  updated: () => void
+}
+
 type FormItem = {
   startTime: string
   date: string
@@ -19,20 +24,21 @@ type FormItem = {
   centerId: number
 }
 
-export const FormDataList = () => {
+export const FormDataList: FC<FormDataListProp> = ({ newData, updated }) => {
   const [formDataList, setFormDataList] = useState([])
-
-  useEffect(() => {
-    const stored = localStorage.getItem('formDataList')
-    if (stored) {
-      setFormDataList(JSON.parse(stored))
-    }
-  }, [])
 
   const dateFormater = (isoString: string) => {
     const parsedDate = parseISO(isoString)
     return format(parsedDate, 'dd/MM/yy')
   }
+
+  useEffect(() => {
+    const stored = localStorage.getItem('formDataList')
+    if (stored) {
+      setFormDataList(JSON.parse(stored))
+      updated()
+    }
+  }, [newData, updated])
 
   if (formDataList.length === 0) {
     return (
