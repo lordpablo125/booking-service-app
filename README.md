@@ -2,8 +2,13 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+First, install dependencies:
 
+```bash
+npm install
+```
+
+Then, run the development server:
 ```bash
 npm run dev
 # or
@@ -16,21 +21,46 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+## Deployed on Netlify
 
-To learn more about Next.js, take a look at the following resources:
+This is the link to the deployed version of the app: 
+[Booking-service-app](https://booking-service-app.netlify.app)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Total Time Invested
+Approximately 16 hours were spent on this project, including:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Development
+- Deployment
+- Documentation
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Details on any AI tools used
+ChatGPT was utilized as an AI assistant to streamline the development process by generating boilerplate code and reusable templates, including components, list views, form structures, mock Axios instances, and service call implementations.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Features you would implement with more time
+I would implement state management using the Context API to handle updates to and retrieval of data from localStorage.
+
+## Libraries used
+
+- Material UI:
+The core Material UI component library, offering ready-to-use UI components that follow Google's Material Design principles.
+
+
+- Tanstack-query:
+A powerful data-fetching and caching library for React apps. It helps manage server state (e.g., fetching, caching, syncing data from APIs).
+
+- Date-fns:
+A modern date utility library used to parse, format, and manipulate dates in JavaScript/TypeScript.
+
+- Next.js:
+The Next.js framework, used for building server-side rendered React applications with built-in routing, SSR, and static site generation.
+
+- React-hook-form:
+A performant form library for React that provides easy form handling, validation, and integration with other tools like Yup.
+
+- Yup:
+A JavaScript schema validation library used to validate form data, often in conjunction with react-hook-form.
+
+- Tailwindcss: Utility-first CSS framework for rapidly building custom and responsive UIs.
