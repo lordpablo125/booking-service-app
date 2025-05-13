@@ -1,9 +1,15 @@
 import ServicesCard from '@/components/ServicesCard'
 
-const ServicePage = async ({ params }: any) => {
+type ServiceProps = {
+  params: Promise<{ centerId: number }>
+}
+
+const ServicePage = async ({ params }: ServiceProps) => {
+  const { centerId } = await params
+
   return (
     <>
-      <ServicesCard centerId={params.centerId} />
+      <ServicesCard centerId={centerId} />
     </>
   )
 }

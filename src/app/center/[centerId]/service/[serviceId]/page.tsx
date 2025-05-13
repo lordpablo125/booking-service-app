@@ -1,10 +1,15 @@
 import BookingForm from '@/components/BookingForm'
-import { use } from 'react'
 
-const PageBooking = ({ params }: any) => {
+type BookingProps = {
+  params: Promise<{ centerId: number; serviceId: string }>
+}
+
+const PageBooking = async ({ params }: BookingProps) => {
+  const { centerId, serviceId } = await params
+
   return (
     <>
-      <BookingForm centerId={params.centerId} serviceId={params.serviceId} />
+      <BookingForm centerId={centerId} serviceId={serviceId} />
     </>
   )
 }
